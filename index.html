@@ -1,0 +1,21 @@
+<html>
+	<body>
+	{% for url_item in url_items %}
+		{% if url_item.owner %}
+		<p>{{ url_item.owner.nickname }}</p> wrote:&nbsp;
+		{% else %}An anonymous person wrote:{% endif %}
+		<span>{{ url_item.url|escape }}</p>
+	{% endfor %}
+
+	<form action="/new" method="post">
+		<div>
+			<input name="url" type="url" />
+		</div>
+		<div>
+			<input type="submit" value="Add URL">
+		</div>
+	</form>
+
+	<a href="{{ url }}">{{ url_linktext }}</a>
+  </body>
+</html>

@@ -1,21 +1,21 @@
 <html>
 	<body>
-	{% for url_item in url_items %}
-		{% if url_item.owner %}
-		<p>{{ url_item.owner.nickname }}</p> wrote:&nbsp;
-		{% else %}An anonymous person wrote:{% endif %}
-		<span>{{ url_item.url|escape }}</p>
-	{% endfor %}
+		<p>Logged in as {{ current_user.nickname }}</p>
+		<p>Your pinged URLs are:</p>
+		<ul>
+			{% for url_item in url_items %}
+				<li>{{ url_item.url|escape }}</li>
+			{% endfor %}
+		</ul>
 
-	<form action="/new" method="post">
-		<div>
-			<input name="url" type="url" />
-		</div>
-		<div>
-			<input type="submit" value="Add URL">
-		</div>
-	</form>
+		<form action="/new" method="post">
+			<legend>Add a new pinged URL here:</legend>
+			<fieldset>
+				<input name="url" type="url" />
+				<input type="submit" value="Add URL" />
+			</fieldset>
+		</form>
 
-	<a href="{{ url }}">{{ url_linktext }}</a>
+		<a href="{{ url }}">{{ url_linktext }}</a>
   </body>
 </html>

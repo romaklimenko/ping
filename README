@@ -1,0 +1,1 @@
+I use this util to keep alive some sites on the Internet. These sites have to low request frequency and hosters get them to idle state. To prevent it I send request to these sites every 10 m.

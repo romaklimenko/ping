@@ -68,15 +68,15 @@ class PingController(webapp.RequestHandler):
 		for url_item in url_items:
 			try:
 				if url_item.next_run > datetime.datetime.now():
-					self.response.out.write('<li>{0}, Scheduled.</li>'.format(url_item.url))
+					logging.info('<li>{0}, Scheduled.</li>'.format(url_item.url))
 					continue
 
 				result = urlfetch.fetch(url_item.url)
 				url_item.next_run = datetime.datetime.now() + timedelta(minutes=10)
 				url_item.put()
-				self.response.out.write('<li>{0}, Response status: {1}</li>'.format(url_item.url, result.status_code))
+				logging.info('<li>{0}, Response status: {1}</li>'.format(url_item.url, result.status_code))
 			except:
-				self.response.out.write('<li>{0}, Error: {1}</li>'.format(url_item.url, sys.exc_info()))
+				logging.error('<li>{0}, Error: {1}</li>'.format(url_item.url, sys.exc_info()))
 
 		self.response.out.write('</ul>')
 

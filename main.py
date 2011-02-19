@@ -84,7 +84,7 @@ application = webapp.WSGIApplication(
 									[
 										('/', MainPage),
 										('/new', NewController),
-										('/ping', PingController),
+										('/admin/ping', PingController),
 									],
 									debug=True)
 

@@ -4,7 +4,13 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /admin/.*
+  login: admin
+  script: main.py
 - url: /stylesheets
   static_dir: stylesheets
 - url: .*
   script: main.py
+
+builtins:
+- datastore_admin: on

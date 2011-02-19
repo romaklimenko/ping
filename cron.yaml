@@ -1,0 +1,4 @@
+cron:
+- description: ping to keep sites alive
+  url: /ping
+  schedule: every 15 minutes

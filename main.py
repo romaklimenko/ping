@@ -3,6 +3,7 @@ import os
 import sys
 import urllib2
 import datetime
+import logging
 
 from datetime import timedelta
 from google.appengine.api import urlfetch
@@ -67,16 +68,16 @@ class PingController(webapp.RequestHandler):
 		
 		for url_item in url_items:
 			try:
-				if url_item.next_run > datetime.datetime.now():
-					logging.info('<li>{0}, Scheduled.</li>'.format(url_item.url))
+				if url_item.next_run and url_item.next_run > datetime.datetime.now():
+					logging.info("<li>%(url)s, Scheduled.</li>" % { 'url': url_item.url })
 					continue
 
-				result = urlfetch.fetch(url_item.url)
+				result = urlfetch.fetch(url_item.url, deadline=30)
 				url_item.next_run = datetime.datetime.now() + timedelta(minutes=10)
 				url_item.put()
-				logging.info('<li>{0}, Response status: {1}</li>'.format(url_item.url, result.status_code))
+				logging.info("<li>%(url)s, Response status: %(status)s</li>" % { 'url': url_item.url, 'status': result.status_code })
 			except:
-				logging.error('<li>{0}, Error: {1}</li>'.format(url_item.url, sys.exc_info()))
+				logging.error("<li>%(url)s, Error: %(error)s</li>" % { 'url': url_item.url, 'error': sys.exc_info() })
 
 		self.response.out.write('</ul>')
 
